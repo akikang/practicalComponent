@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <!-- 引入jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <body>
+    <div>overflow 超出显示省略号，点击显示全文</div>
+    <div
+      id="overflow_ellipsis_box"
+      class="overflow_ellipsis"
+      onclick="showAll()"
+    >
+      蹴罢秋千，起来慵整纤纤手。露浓花瘦，薄汗轻衣透。见客入来，袜刬金钗溜。和羞走，倚门回首，却把青梅嗅。
+    </div>
+  </body>
+  <script>
+    function showAll() {
+      $("#overflow_ellipsis_box").toggleClass("overflow_ellipsis");
+    }
+  </script>
+  <!-- css -->
+  <style>
+    .overflow_ellipsis {
+      width: 500px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</html>
