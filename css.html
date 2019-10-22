@@ -10,7 +10,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <body>
-    <div>overflow 超出显示省略号，点击显示全文</div>
+    <!-- 1.overflow 超出显示省略号，点击显示全文 -->
+    <div>
+      <h3>1.overflow 超出显示省略号，点击显示全文</h3>
+    </div>
     <div
       id="overflow_ellipsis_box"
       class="overflow_ellipsis"
@@ -18,11 +21,83 @@
     >
       蹴罢秋千，起来慵整纤纤手。露浓花瘦，薄汗轻衣透。见客入来，袜刬金钗溜。和羞走，倚门回首，却把青梅嗅。
     </div>
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+                <div>
+                    <h3>1.overflow 超出显示省略号，点击显示全文</h3>
+                    </div>
+                    <div
+                    id="overflow_ellipsis_box"
+                    class="overflow_ellipsis"
+                    onclick="showAll()"
+                    >
+                    蹴罢秋千，起来慵整纤纤手。露浓花瘦，薄汗轻衣透。见客入来，袜刬金钗溜。和羞走，倚门回首，却把青梅嗅。
+                </div>
+                <script>
+                    function showAll() {
+                        $("#overflow_ellipsis_box").toggleClass("overflow_ellipsis");
+                    }
+                </script>
+                <style>
+                    .overflow_ellipsis {
+                        width: 500px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                </style>
+            </textarea
+      >
+    </div>
+    <!-- 1.overflow 超出显示省略号，点击显示全文 -->
+    <!-- 2.获取上传音频，视频文件的播放时长 -->
+    <div>
+      <h3>2.获取上传音频，视频文件的播放时长</h3>
+    </div>
+    <div>
+      <input type="file" id="get_duration_file" />
+      <div id="info_of_duration_file"></div>
+    </div>
+    <!-- 2.获取上传音频，视频文件的播放时长 -->
   </body>
   <script>
+    // 01
     function showAll() {
       $("#overflow_ellipsis_box").toggleClass("overflow_ellipsis");
     }
+    // 02
+    $("#get_duration_file").change(function() {
+      $("#info_of_duration_file").html("");
+      var selected_files = $("#get_duration_file").prop("files");
+      for (var i = 0; i < selected_files.length; i++) {
+        getDuration(selected_files[i]);
+      }
+    });
+    function getDuration(file) {
+      // get the duration of file
+      var video = document.createElement("video");
+      var fileURL = URL.createObjectURL(file);
+      video.src = fileURL;
+      // when get the duration arrange the send data and add index
+      video.ondurationchange = function() {
+        let file_name = file.name;
+        let file_type = file.type;
+        let file_size = Math.round((file.size / 1048576) * 100) / 100;
+        let file_duration = this.duration;
+        $("#info_of_duration_file").append(
+          "<p>file name: " +
+            file_name +
+            "</p><p>file type:" +
+            file_type +
+            " </p><p>file size: " +
+            file_size +
+            "mb</p><p>file duration: " +
+            file_duration +
+            "s</p>"
+        );
+      };
+    }
+    // 03
   </script>
   <!-- css -->
   <style>
