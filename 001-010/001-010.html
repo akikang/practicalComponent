@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./001-010.css" />
+  </head>
+  <!-- 引入jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="./001-010.js"></script>
+
+  <body>
+    <div>
+      <h3>目录</h3>
+      <div>
+        <table>
+          <tr>
+            <td>1</td>
+            <td>
+              <a href="#01">overflow 超出显示省略号，点击显示全文</a>
+            </td>
+            <td>2</td>
+            <td>
+              <a href="#02">获取上传音频，视频文件的播放时长</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- ******************** 1.overflow 超出显示省略号，点击显示全文 ******************** -->
+    <div>
+      <h3 id="01">1.overflow 超出显示省略号，点击显示全文</h3>
+    </div>
+    <div
+      id="overflow_ellipsis_box"
+      class="overflow_ellipsis"
+      onclick="showAll()"
+    >
+      蹴罢秋千，起来慵整纤纤手。露浓花瘦，薄汗轻衣透。见客入来，袜刬金钗溜。和羞走，倚门回首，却把青梅嗅。
+    </div>
+    <!-- code area  -->
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+                <div>
+                    <h3>1.overflow 超出显示省略号，点击显示全文</h3>
+                    </div>
+                    <div
+                    id="overflow_ellipsis_box"
+                    class="overflow_ellipsis"
+                    onclick="showAll()"
+                    >
+                    蹴罢秋千，起来慵整纤纤手。露浓花瘦，薄汗轻衣透。见客入来，袜刬金钗溜。和羞走，倚门回首，却把青梅嗅。
+                </div>
+                <script>
+                    function showAll() {
+                        $("#overflow_ellipsis_box").toggleClass("overflow_ellipsis");
+                    }
+                </script>
+                <style>
+                    .overflow_ellipsis {
+                        width: 500px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                </style>
+            </textarea
+      >
+    </div>
+    <!-- code area  -->
+    <!-- ******************** 2.获取上传音频，视频文件的播放时长 ******************** -->
+    <div>
+      <h3>2.获取上传音频，视频文件的播放时长</h3>
+    </div>
+    <div>
+      <input type="file" id="get_duration_file" />
+      <div id="info_of_duration_file"></div>
+    </div>
+    <!-- code area  -->
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+        <div>
+          <input type="file" id="get_duration_file" />
+          <div id="info_of_duration_file"></div>
+        </div>
+        <script>
+          $("#get_duration_file").change(function() {
+          $("#info_of_duration_file").html("");
+          var selected_files = $("#get_duration_file").prop("files");
+          for (var i = 0; i < selected_files.length; i++) {
+            getDuration(selected_files[i]);
+          }
+        });
+        function getDuration(file) {
+          // get the duration of file
+          var video = document.createElement("video");
+          var fileURL = URL.createObjectURL(file);
+          video.src = fileURL;
+          // when get the duration arrange the send data and add index
+          video.ondurationchange = function() {
+            let file_name = file.name;
+            let file_type = file.type;
+            let file_size = Math.round((file.size / 1048576) * 100) / 100;
+            let file_duration = this.duration;
+            $("#info_of_duration_file").append(
+              "<p>file name: " +
+                file_name +
+                "</p><p>file type:" +
+                file_type +
+                " </p><p>file size: " +
+                file_size +
+                "mb</p><p>file duration: " +
+                file_duration +
+                "s</p>"
+            );
+          };
+        }
+      </script>
+    </textarea
+      >
+    </div>
+    <!-- code area  -->
+    <!-- ******************** 3.多页面公用批量删除 ******************** -->
+    <div>
+      <h3>3.多页面公用批量删除</h3>
+    </div>
+    <table class="bulk_delete_table">
+      <tr>
+        <th>
+          <input
+            type="checkbox"
+            id="companies_batch_delete"
+            onClick="batch_checkbox('companies')"
+          />
+        </th>
+        <th>company</th>
+        <th>address</th>
+        <th>owner</th>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="companies_checkbox"
+            value="1"
+            onClick="saveId('companies',this.checked,1)"
+          />
+        </td>
+        <td>AAA</td>
+        <td>
+          Shanghai
+        </td>
+        <td>
+          Mr.Chen
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="companies_checkbox"
+            value="2"
+            onClick="saveId('companies',this.checked,2)"
+          />
+        </td>
+        <td>BBB</td>
+        <td>
+          Shanghai
+        </td>
+        <td>
+          Mr.Wang
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="companies_checkbox"
+            value="3"
+            onClick="saveId('companies',this.checked,3)"
+          />
+        </td>
+        <td>CCC</td>
+        <td>
+          Shanghai
+        </td>
+        <td>
+          Miss.Li
+        </td>
+      </tr>
+    </table>
+
+    <table class="bulk_delete_table">
+      <tr>
+        <th>
+          <input
+            type="checkbox"
+            id="users_batch_delete"
+            onClick="batch_checkbox('users')"
+          />
+        </th>
+        <th>user</th>
+        <th>email</th>
+        <th>age</th>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="users_checkbox"
+            value="1"
+            onClick="saveId('users',this.checked,1)"
+          />
+        </td>
+        <td>AA</td>
+        <td>
+          admin@gmail.com
+        </td>
+        <td>
+          30
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="users_checkbox"
+            value="2"
+            onClick="saveId('users',this.checked,2)"
+          />
+        </td>
+        <td>BB</td>
+        <td>
+          admin@gmail.com
+        </td>
+        <td>
+          30
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            class="users_checkbox"
+            value="3"
+            onClick="saveId('users',this.checked,3)"
+          />
+        </td>
+        <td>CC</td>
+        <td>
+          admin@gmail.com
+        </td>
+        <td>
+          30
+        </td>
+      </tr>
+    </table>
+
+    <!-- code area  -->
+    <!-- code area  -->
+    <!-- ******************** 4.多页面公用批量删除 ******************** -->
+  </body>
+</html>

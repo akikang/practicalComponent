@@ -1,0 +1,11 @@
+.overflow_ellipsis {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bulk_delete_table {
+  width: 80%;
+  text-align: center;
+  border: 1px solid lightgray;
+}
