@@ -25,6 +25,14 @@
             <td>
               <a href="#02">获取上传音频，视频文件的播放时长</a>
             </td>
+            <td>3</td>
+            <td>
+              <a href="#03">多页面公用批量删除</a>
+            </td>
+            <td>4</td>
+            <td>
+              <a href="#04">获取终端是IOS还是安卓类型</a>
+            </td>
           </tr>
         </table>
       </div>
@@ -43,9 +51,6 @@
     <!-- code area  -->
     <div>
       <textarea name="" id="" cols="150" rows="10">
-                <div>
-                    <h3>1.overflow 超出显示省略号，点击显示全文</h3>
-                    </div>
                     <div
                     id="overflow_ellipsis_box"
                     class="overflow_ellipsis"
@@ -72,7 +77,7 @@
     <!-- code area  -->
     <!-- ******************** 2.获取上传音频，视频文件的播放时长 ******************** -->
     <div>
-      <h3>2.获取上传音频，视频文件的播放时长</h3>
+      <h3 id="02">2.获取上传音频，视频文件的播放时长</h3>
     </div>
     <div>
       <input type="file" id="get_duration_file" />
@@ -124,7 +129,7 @@
     <!-- code area  -->
     <!-- ******************** 3.多页面公用批量删除 ******************** -->
     <div>
-      <h3>3.多页面公用批量删除</h3>
+      <h3 id="03">3.多页面公用批量删除</h3>
     </div>
     <table class="bulk_delete_table">
       <tr>
@@ -259,7 +264,244 @@
     </table>
 
     <!-- code area  -->
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+ 
+          <table class="bulk_delete_table">
+              <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    id="companies_batch_delete"
+                    onClick="batch_checkbox('companies')"
+                  />
+                </th>
+                <th>company</th>
+                <th>address</th>
+                <th>owner</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="companies_checkbox"
+                    value="1"
+                    onClick="saveId('companies',this.checked,1)"
+                  />
+                </td>
+                <td>AAA</td>
+                <td>
+                  Shanghai
+                </td>
+                <td>
+                  Mr.Chen
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="companies_checkbox"
+                    value="2"
+                    onClick="saveId('companies',this.checked,2)"
+                  />
+                </td>
+                <td>BBB</td>
+                <td>
+                  Shanghai
+                </td>
+                <td>
+                  Mr.Wang
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="companies_checkbox"
+                    value="3"
+                    onClick="saveId('companies',this.checked,3)"
+                  />
+                </td>
+                <td>CCC</td>
+                <td>
+                  Shanghai
+                </td>
+                <td>
+                  Miss.Li
+                </td>
+              </tr>
+            </table>
+        
+            <table class="bulk_delete_table">
+              <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    id="users_batch_delete"
+                    onClick="batch_checkbox('users')"
+                  />
+                </th>
+                <th>user</th>
+                <th>email</th>
+                <th>age</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="users_checkbox"
+                    value="1"
+                    onClick="saveId('users',this.checked,1)"
+                  />
+                </td>
+                <td>AA</td>
+                <td>
+                  admin@gmail.com
+                </td>
+                <td>
+                  30
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="users_checkbox"
+                    value="2"
+                    onClick="saveId('users',this.checked,2)"
+                  />
+                </td>
+                <td>BB</td>
+                <td>
+                  admin@gmail.com
+                </td>
+                <td>
+                  30
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="users_checkbox"
+                    value="3"
+                    onClick="saveId('users',this.checked,3)"
+                  />
+                </td>
+                <td>CC</td>
+                <td>
+                  admin@gmail.com
+                </td>
+                <td>
+                  30
+                </td>
+              </tr>
+            </table>
+            <script>
+              var delete_page = "";
+              window.onload = function() {
+                localStorage.setItem("companies", "");
+                localStorage.setItem("users", "");
+              };
+              // change the checked status
+              function batch_checkbox(page) {
+                var value = $("#" + page + "_batch_delete").is(":checked");
+                if (value === true) {
+                  $("." + page + "_checkbox").prop("checked", true);
+                  // get all the id in current page
+                  var id_arr = $("." + page + "_checkbox")
+                    .map(function() {
+                      return this.value;
+                    })
+                    .get();
+                  // put into localStorage
+                  localStorage.setItem(page, id_arr);
+                } else {
+                  $("." + page + "_checkbox").prop("checked", false);
+                  // delete all the id in localStorage
+                  localStorage.setItem(page, "");
+                }
+              }
+              // when click 「削除」set the delete_page
+              function set_delete_page(page_name) {
+                this.delete_page = page_name;
+              }
+              //save or delete id in localstorage
+              function saveId(page, checked, id) {
+                var id_in_local = localStorage.getItem(page);
+                if (checked) {
+                  if (!id_in_local) {
+                    id_in_local = id;
+                  } else {
+                    id_in_local += "," + id;
+                  }
+                } else {
+                  $("#" + page + "_batch_delete").prop("checked", false);
+                  if (id_in_local.length == 1) {
+                    id_in_local = "";
+                  } else {
+                    id_in_local = id_in_local.split(",");
+                    var index = id_in_local.indexOf(id.toString());
+
+                    if (index > -1) {
+                      id_in_local.splice(index, 1);
+                    }
+                  }
+                }
+                localStorage.setItem(page, id_in_local);
+              }
+              //batch delete
+              function batch_delete() {
+                var delete_ids = localStorage.getItem(this.delete_page);
+                var delete_arr = delete_ids.split(",");
+                $.ajax({
+                  url: "/" + this.delete_page + "/bulk_delete",
+                  type: "POST",
+                  data: {
+                    ids: delete_arr
+                  },
+                  success: function(data) {
+                    debugger;
+                  }
+                }).fail(data => {
+                  alert("system error");
+                });
+              }
+              </script>
+            </textarea
+      >
+    </div>
     <!-- code area  -->
-    <!-- ******************** 4.多页面公用批量删除 ******************** -->
+    <!-- ******************** 4.获取终端是IOS还是安卓类型 ******************** -->
+    <div>
+      <h3 id="04">4.获取终端是IOS还是安卓类型</h3>
+    </div>
+    <button onclick="judgeClient()">显示终端类型</button>
+    <!-- code area  -->
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+          <button onclick="judgeClient()">显示终端类型</button>
+          <script>
+            function judgeClient() {
+              let u = navigator.userAgent;
+              let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //判断是否是 android终端
+              let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //判断是否是 iOS终端
+              if (isAndroid) {
+                alert("Android");
+              } else if (isIOS) {
+                alert("iOS");
+              } else {
+                alert("else");
+              }
+            }
+          </script>
+      </textarea>
+    </div>
+    <!-- code area  -->
+    <!-- ******************** 5.多页面公用批量删除 ******************** -->
+
+    <!-- code area  -->
+    <!-- code area  -->
   </body>
 </html>
