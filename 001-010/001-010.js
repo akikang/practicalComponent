@@ -4,7 +4,7 @@ function showAll() {
   $("#overflow_ellipsis_box").toggleClass("overflow_ellipsis");
 }
 // ********************02********************
-$("#get_duration_file").change(function() {
+$("#get_duration_file").change(function () {
   $("#info_of_duration_file").html("");
   var selected_files = $("#get_duration_file").prop("files");
   for (var i = 0; i < selected_files.length; i++) {
@@ -17,7 +17,7 @@ function getDuration(file) {
   var fileURL = URL.createObjectURL(file);
   video.src = fileURL;
   // when get the duration arrange the send data and add index
-  video.ondurationchange = function() {
+  video.ondurationchange = function () {
     let file_name = file.name;
     let file_type = file.type;
     let file_size = Math.round((file.size / 1048576) * 100) / 100;
@@ -38,7 +38,7 @@ function getDuration(file) {
 // ********************03********************
 var delete_page = "";
 
-window.onload = function() {
+window.onload = function () {
   localStorage.setItem("companies", "");
   localStorage.setItem("users", "");
 };
@@ -49,7 +49,7 @@ function batch_checkbox(page) {
     $("." + page + "_checkbox").prop("checked", true);
     // get all the id in current page
     var id_arr = $("." + page + "_checkbox")
-      .map(function() {
+      .map(function () {
         return this.value;
       })
       .get();
@@ -97,12 +97,12 @@ function batch_delete() {
     url: "/" + this.delete_page + "/bulk_delete",
     type: "POST",
     data: {
-      ids: delete_arr
+      ids: delete_arr,
     },
-    success: function(data) {
+    success: function (data) {
       debugger;
-    }
-  }).fail(data => {
+    },
+  }).fail((data) => {
     alert("system error");
   });
 }
@@ -120,4 +120,22 @@ function judgeClient() {
     alert("else");
   }
 }
-// ********************04********************
+// ********************06********************
+function stringToUrl() {
+  let contents = $("#oldUrlString").val();
+  var reg = /https?:\/\/\S+(\s|\r\n|$)/gi;
+  var url = contents.match(reg);
+
+  if (url) {
+    for (var i = 0; i < url.length; i++) {
+      let str = url[i];
+      str = str.replace(/\ +/g, "");
+      str = str.replace(/[\r\n]/g, "");
+      contents = contents.replace(
+        str,
+        "<a href='" + str + "' target='_blank'>" + str + "</a>"
+      );
+    }
+  }
+  $("#newUrlString")[0].innerHTML = contents;
+}

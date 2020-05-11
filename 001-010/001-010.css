@@ -9,3 +9,8 @@
   text-align: center;
   border: 1px solid lightgray;
 }
+#newUrlString {
+  width: 922px;
+  height: 156px;
+  border: 1px solid black;
+}

@@ -556,7 +556,30 @@
     <div>
       <h3 id="06">6.识别URL转换为a链接</h3>
     </div>
+    <div>
+      <p>以http开头，空格结尾的字符串将转换为URL，并加下划线</p>
+      <p><button onclick="stringToUrl()">转 换</button></p>
+      <textarea id="oldUrlString" cols="150" rows="10"></textarea>
+      <p id="newUrlString"></p>
+    </div>
     <!-- code area  -->
-    <div></div>
+    <div>
+      <textarea name="" id="" cols="150" rows="10">
+        var reg = /https?:\/\/\S+(\s|\r\n|$)/gi;
+        var url = contents.match(reg);
+      
+        if (url) {
+          for (var i = 0; i < url.length; i++) {
+            let str = url[i];
+            str = str.replace(/\ +/g, "");
+            str = str.replace(/[\r\n]/g, "");
+            contents = contents.replace(
+              str,
+              "<a href='" + str + "' target='_blank'>" + str + "</a>"
+            );
+          }
+        }
+      </textarea>
+    </div>
   </body>
 </html>
